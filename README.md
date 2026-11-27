@@ -1,146 +1,57 @@
 # MineDigibyteMobile
 
-**Open-source DigiByte (DGB) mining client for Android — built with .NET MAUI.**
+**Open-source DigiByte (DGB) mining client for Android, built with .NET MAUI.**
 
-[Português](#português) · [English](#english)
+## About the project
 
----
+MineDigibyteMobile was created because finding trustworthy and transparent mobile-mining applications can be difficult. Some apps presented as miners may simulate mining results or operate as closed systems. Others may restrict users to selected pools, charge fees that make withdrawals impractical, or fail to explain clearly how mining results are calculated.
 
-## Português
+This is the motivation behind this project, not a claim that every mining app on the Play Store has these problems. MineDigibyteMobile was created as an open-source alternative intended to give users more visibility into their mining configuration and the work performed by the app.
 
-### Sobre o projeto
+The application connects to compatible DigiByte **SHA-256d** mining pools using the Stratum protocol. Pool payouts, fees, minimum withdrawal amounts, and payment schedules are controlled by the pool selected by the user. The app does not control or guarantee mining payouts.
 
-O MineDigibyteMobile nasceu de uma preocupação: encontrar aplicativos de mineração móvel confiáveis e transparentes pode ser difícil. Muitos aplicativos apresentados como mineração podem apenas simular resultados ou usar modelos fechados; outros podem limitar o usuário a pools específicas, cobrar taxas que tornam saques pouco viáveis ou não explicar claramente como os resultados são calculados.
+## Features and current status
 
-Não afirmamos que todos os aplicativos de mineração disponíveis na Play Store tenham esses problemas. Essa foi a motivação do autor para criar uma alternativa aberta, na qual o usuário possa configurar a conexão de mineração e acompanhar o trabalho realizado.
-
-O objetivo do MineDigibyteMobile é oferecer transparência e controle ao usuário. O aplicativo se conecta a pools DigiByte compatíveis com **SHA-256d** usando o protocolo Stratum. O pagamento de recompensas, quando houver, é administrado pela pool escolhida — o aplicativo não controla nem garante pagamentos.
-
-### Características e estado atual
-
-- Aplicativo Android desenvolvido com .NET MAUI / C#.
-- Mineração SHA-256d por CPU através de conexão Stratum.
-- Configuração de pool, porta, usuário/worker e senha.
-- Interface com suporte a português, inglês e espanhol.
-- Monitoramento da temperatura da bateria reportada pelo Android.
-- Redução temporária de intensidade e pausa por proteção térmica, conforme os limites documentados no código.
-- Endereço de doação DGB voluntária do projeto original.
-
-**Limitação importante:** a mineração GPU real ainda não está implementada/validada nesta versão. Não considere detecção preliminar de hardware ou bibliotecas nativas ausentes como suporte funcional a GPU. Consulte [STATUS_DA_ETAPA.md](STATUS_DA_ETAPA.md).
-
-### Avisos sobre mineração
-
-- Mineração em celular não garante lucro e pode gerar recompensas muito pequenas ou nenhuma recompensa.
-- Hashrate, dificuldade da rede, regras da pool, taxa da pool, conectividade e saldo mínimo de saque afetam os resultados.
-- Pools são serviços de terceiros. Verifique taxas, regras de pagamento, reputação e requisitos antes de conectar.
-- Mineração contínua consome bateria e pode aquecer o aparelho. A proteção térmica reduz riscos, mas não garante que o dispositivo não superaqueça. Interrompa o uso se notar aquecimento excessivo.
-- Use somente carteiras e endereços que você controla. Confira o endereço antes de iniciar.
-- O projeto não é afiliado, patrocinado ou endossado oficialmente pela DigiByte Foundation, pela rede DigiByte ou por operadores de pools.
-
-### Doação voluntária
-
-Se desejar apoiar o desenvolvimento, você pode enviar DigiByte (DGB) para:
-
-`dgb1q269vr89kzrfg3vfa9upae32fqkfh2uvf7d0jg2`
-
-Doações são voluntárias e não são necessárias para instalar ou usar o aplicativo. Confira a rede e o endereço antes de enviar. O desenvolvedor nunca solicitará sua chave privada ou frase de recuperação.
-
-### Baixar
-
-- **Código-fonte:** use o botão **Code → Download ZIP** nesta página ou clone o repositório.
-- **APK:** baixe somente os APKs anexados às [Releases oficiais](https://github.com/wjfpvh-glitch/MineDigibyteMobile/releases), quando publicados.
-- Verifique sempre se a release foi publicada neste repositório original. Não instale APKs de forks ou páginas que se apresentem como oficiais sem confirmação.
-
-### Compilar
-
-Requisitos gerais:
-- Windows com .NET 10 SDK e workload .NET MAUI Android.
-- Android SDK e ferramentas de build compatíveis.
-- JDK compatível com a versão do Android workload instalada.
-
-Comandos básicos no PowerShell:
-
-```powershell
-dotnet workload install maui-android
-dotnet restore .\MineDigibyteMobile.csproj
-dotnet build .\MineDigibyteMobile.csproj -f net10.0-android
-```
-
-A configuração exata do ambiente pode variar conforme as versões do .NET, Android SDK e workloads. Uma compilação bem-sucedida não substitui testes em dispositivo real.
-
-### Identidade do projeto e versões derivadas
-
-O repositório em `github.com/wjfpvh-glitch/MineDigibyteMobile` é a fonte original deste projeto e é mantido pelo seu criador e fundador, **wjfpvh-glitch**.
-
-Somente releases publicadas neste repositório são releases oficiais do projeto original. Cópias, forks e versões modificadas por terceiros não são publicadas, mantidas, verificadas ou endossadas pelo autor original, a menos que exista declaração explícita neste repositório.
-
-Quem redistribuir uma versão modificada deve identificar claramente que se trata de um fork/versão modificada, usar identidade própria e não sugerir que o autor original a publicou ou aprovou. A licença MIT exige preservar os avisos de copyright e licença aplicáveis; ela não concede direito de usar marcas, identidade visual ou de alegar endosso do projeto original.
-
-### Governança e segurança
-
-- O repositório é público para leitura e download.
-- Somente o proprietário do repositório administra o projeto e publica releases oficiais.
-- Pull requests e contribuições externas não são aceitos para incorporação na linha oficial, salvo anúncio explícito em contrário pelo proprietário.
-- Nunca publique keystores, senhas, tokens, chaves privadas, frases de recuperação ou arquivos de assinatura.
-- Problemas de segurança devem ser comunicados ao proprietário de forma responsável; não publique segredos ou dados pessoais em issues.
-
-### Licença
-
-Este projeto é distribuído sob a licença **MIT**. Consulte o arquivo [LICENSE](LICENSE). Bibliotecas e dependências de terceiros permanecem sob suas próprias licenças.
-
----
-
-## English
-
-### About
-
-MineDigibyteMobile was created out of concern that trustworthy and transparent mobile mining applications can be difficult to identify. Some apps marketed as miners may simulate results or use closed systems; others may restrict users to selected pools, charge fees that make withdrawals impractical, or fail to explain how results are calculated.
-
-This is not a claim that every mining app on the Play Store has these problems. It describes the motivation behind creating an open alternative where users can configure their mining connection and monitor the work performed.
-
-MineDigibyteMobile aims to give users transparency and control. The app connects to DigiByte pools compatible with **SHA-256d** through the Stratum protocol. Any mining payout is handled by the selected pool; the app does not control or guarantee payments.
-
-### Features and current status
-
-- Android application built with .NET MAUI / C#.
+- Android application built with .NET MAUI and C#.
 - SHA-256d CPU mining through a Stratum connection.
-- Configurable pool, port, username/worker and password.
-- Portuguese, English and Spanish interface localization.
-- Monitoring of the battery temperature reported by Android.
-- Temporary intensity reduction and thermal pause according to the limits documented in the code.
-- Optional DGB donation address for the original project.
+- Configurable pool address, port, username/worker, and password.
+- Portuguese, English, and Spanish interface localization.
+- Battery-temperature monitoring using information reported by Android.
+- Thermal intensity reduction and mining pause according to the safeguards implemented in the source code.
+- Optional DGB donation address supporting the original project.
 
-**Important limitation:** real GPU mining is not yet implemented/validated in this version. Preliminary hardware detection or absent native libraries must not be interpreted as working GPU support. See [STATUS_DA_ETAPA.md](STATUS_DA_ETAPA.md).
+**GPU limitation:** GPU mining must not be considered available unless and until it is implemented and validated in a published version. Hardware detection or references to native libraries alone do not mean GPU mining is functional. Check the project source and release notes for the actual status.
 
-### Mining and safety notices
+## Mining, profitability, and safety
 
-- Mobile mining is not guaranteed to be profitable and may produce very small rewards or no rewards.
-- Hashrate, network difficulty, pool rules and fees, connectivity, and minimum payout thresholds affect results.
-- Pools are third-party services. Review their fees, payout rules, reputation, and requirements before connecting.
-- Continuous mining consumes battery power and can heat the device. Thermal safeguards reduce risk but cannot guarantee that overheating will not occur. Stop mining if the device becomes excessively hot.
-- Use only wallets and addresses you control. Verify the address before starting.
-- This project is not officially affiliated with, sponsored by, or endorsed by the DigiByte Foundation, the DigiByte network, or any pool operator.
+- Mobile mining is not guaranteed to be profitable. It may generate very small rewards or no rewards at all.
+- Results depend on device performance, hashrate, network difficulty, pool rules and fees, connectivity, and minimum payout thresholds.
+- Mining pools are third-party services. Review their fees, payout policies, reputation, and requirements before connecting.
+- Continuous mining consumes battery power and can heat the device. Thermal safeguards can reduce risk but cannot guarantee that overheating will not occur. Stop mining if the device becomes excessively hot.
+- Use only wallet addresses you control, and verify the address and network before mining.
+- This project is independent and is not officially affiliated with, sponsored by, or endorsed by the DigiByte Foundation, the DigiByte network, or any mining pool operator.
 
-### Voluntary donation
+## Voluntary DGB donations
 
-To support development, you may voluntarily donate DigiByte (DGB) to:
+Users who wish to support development may voluntarily donate DigiByte (DGB) to the original project:
 
 `dgb1q269vr89kzrfg3vfa9upae32fqkfh2uvf7d0jg2`
 
-Donations are optional and are not required to install or use the app. Verify the network and address before sending. The developer will never ask for your private key or recovery phrase.
+Donations are optional and are not required to install or use the application. Always verify the network and address before sending funds. The developer will never ask for your private keys or wallet recovery phrase.
 
-### Downloads
+## Downloads
 
-- **Source code:** use **Code → Download ZIP** on this page or clone the repository.
-- **APK:** download APKs only from the [official Releases page](https://github.com/wjfpvh-glitch/MineDigibyteMobile/releases), when available.
-- Confirm that a release was published in this original repository. Do not assume APKs from forks or other pages are official.
+- **Source code:** use **Code → Download ZIP** on this repository page, or clone the repository.
+- **Android APK:** download APK files only from the [official Releases page](https://github.com/wjfpvh-glitch/MineDigibyteMobile/releases), when published.
+- A release is an official release of the original project only when it is published in this repository. APKs from forks or unrelated websites are not official releases of this project.
 
-### Build
+## Building from source
 
 General requirements:
-- Windows with the .NET 10 SDK and .NET MAUI Android workload.
-- Android SDK and compatible build tools.
-- A JDK compatible with the installed Android workload.
+
+- Windows with the .NET 10 SDK and the .NET MAUI Android workload.
+- Android SDK and compatible Android build tools.
+- A JDK compatible with the installed .NET Android workload.
 
 Basic PowerShell commands:
 
@@ -150,24 +61,26 @@ dotnet restore .\MineDigibyteMobile.csproj
 dotnet build .\MineDigibyteMobile.csproj -f net10.0-android
 ```
 
-Exact environment requirements may vary with .NET, Android SDK, and workload versions. A successful build does not replace testing on a physical device.
+Exact environment requirements may vary with the installed .NET SDK, Android SDK, JDK, and workloads. A successful build does not replace testing on a physical Android device.
 
-### Project identity and modified versions
+## Original project, authorship, and forks
 
-The repository at `github.com/wjfpvh-glitch/MineDigibyteMobile` is the original source of this project and is maintained by its creator and founder, **wjfpvh-glitch**.
+The repository at [github.com/wjfpvh-glitch/MineDigibyteMobile](https://github.com/wjfpvh-glitch/MineDigibyteMobile) is the original source repository for this project.
 
-Only releases published in this repository are official releases of the original project. Copies, forks, and third-party modified versions are not published, maintained, verified, or endorsed by the original author unless this repository explicitly states otherwise.
+**Creator and founder: wjfpvh-glitch.**
 
-Anyone redistributing a modified version should clearly identify it as a fork/modified version, use its own identity, and not imply that the original author published or approved it. The MIT license requires preservation of applicable copyright and license notices; it does not grant rights to use the original project's trademarks, branding, or imply endorsement.
+Only releases published in this original repository are official releases of MineDigibyteMobile. Copies, forks, and third-party modified versions are not published, maintained, verified, or endorsed by the original creator unless this repository explicitly says otherwise.
 
-### Governance and security
+Anyone redistributing a modified version should clearly identify it as a fork or modified version, use a distinct project name and branding, and never imply that the original creator published or approved it. The MIT License requires preservation of applicable copyright and license notices. It does not grant permission to use the original project's name, branding, or identity in a way that implies endorsement.
 
-- The repository is public for viewing and downloading.
-- Only the repository owner administers the project and publishes official releases.
-- External pull requests and contributions are not accepted for inclusion in the official line unless the owner explicitly announces otherwise.
-- Never publish keystores, passwords, tokens, private keys, recovery phrases, or signing files.
-- Report security issues responsibly to the owner; do not post secrets or personal data in issues.
+## Project governance and security
 
-### License
+- This repository is public so anyone can inspect and download the source code.
+- The repository owner is responsible for the original project, its official releases, and changes to the main repository.
+- External contributions and pull requests are not accepted for inclusion in the official project unless the owner explicitly announces otherwise.
+- Never commit Android signing keystores, passwords, access tokens, private keys, wallet recovery phrases, or other secrets.
+- Report security issues responsibly to the repository owner. Do not publish secrets or personal information in public issues.
 
-This project is distributed under the **MIT License**. See [LICENSE](LICENSE). Third-party libraries and dependencies remain under their respective licenses.
+## License
+
+MineDigibyteMobile is distributed under the **MIT License**. See [LICENSE](LICENSE) for the complete license text. Third-party libraries and dependencies remain subject to their respective licenses.
