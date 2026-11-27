@@ -41,11 +41,9 @@ Donations are optional and are not required to install or use the application. A
 
 ## Downloads
 
-<sub>Latest stable release · v1.0.0</sub>
+**[DOWNLOAD APKs — VIEW ALL OFFICIAL RELEASES](https://github.com/wjfpvh-glitch/MineDigibyteMobile/releases)**
 
-**[DOWNLOAD ANDROID APK — MineDigibyteMobile v1.0.0](https://github.com/wjfpvh-glitch/MineDigibyteMobile/releases/download/v1.0.0/com.companyname.minedigibytemobile-Signed.apk)**
-
-[View release details, version notes, and all available assets](https://github.com/wjfpvh-glitch/MineDigibyteMobile/releases/tag/v1.0.0).
+Visit the official Releases page above to choose and download the APK from the version you want. The latest stable release is marked **Latest** on GitHub. Release notes and all attached files are available on each release page.
 
 - **Source code:** use **Code → Download ZIP** on this repository page, or clone the repository.
 - Only APKs attached to releases published in this original repository are official releases. APKs from forks or unrelated websites are not official releases of this project.
