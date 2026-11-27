@@ -68,7 +68,7 @@ Exact environment requirements may vary with the installed .NET SDK, Android SDK
 
 ## Development acknowledgments and project history
 
-MineDigibyteMobile was created by **wjfpvh-glitch**, with development assistance from **ChatGPT (OpenAI)** and **Glauyde**. Their assistance contributed to the development process; the original project creator and repository owner is wjfpvh-glitch.
+MineDigibyteMobile was created by **wjfpvh-glitch**, with development assistance from **ChatGPT (OpenAI)** and **Claude**. Their assistance contributed to the development process; the original project creator and repository owner is wjfpvh-glitch.
 
 This application is a DigiByte-focused adaptation of the creator's earlier Android mining project, [MineBitcoinMobile](https://github.com/wjfpvh-glitch/MineBitcoinMobile). MineDigibyteMobile was developed by adapting that project to mine **DigiByte (DGB)** rather than Bitcoin (BTC), with the changes needed for the DigiByte network and compatible mining pools.
 
