@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:loc="clr-namespace:MineDigibyteMobile.Localization"
+             x:Class="MineDigibyteMobile.SettingsPage"
+             Title="{loc:Translate Key=SettingsTitle}"
+             Background="#101318">
+    <Grid RowDefinitions="*">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="20" Spacing="18">
+                <Label Text="{loc:Translate Key=SettingsHeading}"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       TextColor="#1E90FF" />
+
+                <Label Text="{loc:Translate Key=Language}"
+                       FontSize="14"
+                       FontAttributes="Bold"
+                       TextColor="White" />
+                <Picker x:Name="LanguagePicker"
+                        Title="{loc:Translate Key=LanguagePickerTitle}"
+                        TextColor="White"
+                        BackgroundColor="#1B222C"
+                        SelectedIndexChanged="LanguagePicker_SelectedIndexChanged" />
+
+                <Border Background="#1B222C"
+                        Stroke="#334052"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="{loc:Translate Key=MiningIntensity}"
+                               FontSize="17"
+                               FontAttributes="Bold"
+                               TextColor="White" />
+                        <Label x:Name="IntensityValueLabel"
+                               Text="50%"
+                               FontSize="28"
+                               FontAttributes="Bold"
+                               TextColor="#1E90FF" />
+                        <Slider x:Name="IntensitySlider"
+                                Minimum="1"
+                                Maximum="100"
+                                Value="50"
+                                MinimumTrackColor="#1E90FF"
+                                MaximumTrackColor="#465366"
+                                ThumbColor="#1E90FF"
+                                ValueChanged="IntensitySlider_ValueChanged" />
+                        <Label Text="{loc:Translate Key=IntensityLevels}"
+                               FontSize="12"
+                               TextColor="#CBD2DC" />
+                        <Label Text="{loc:Translate Key=IntensityExplanation}"
+                               FontSize="12"
+                               TextColor="#CBD2DC" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Background="#1B222C"
+                        Stroke="#334052"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="{loc:Translate Key=BackgroundMining}"
+                               FontSize="17"
+                               FontAttributes="Bold"
+                               TextColor="White" />
+                        <Switch x:Name="BackgroundMiningSwitch"
+                                OnColor="#1E90FF"
+                                ThumbColor="White"
+                                Toggled="BackgroundMiningSwitch_Toggled" />
+                        <Label x:Name="BackgroundServiceStatusLabel"
+                               Text="{loc:Translate Key=AndroidServiceInactive}"
+                               FontSize="12"
+                               TextColor="#CBD2DC" />
+                        <Label Text="{loc:Translate Key=BackgroundMiningExplanation}"
+                               FontSize="12"
+                               TextColor="#CBD2DC" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Background="#1B222C"
+                        Stroke="#334052"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="{loc:Translate Key=EnableGpu}"
+                               FontSize="17"
+                               FontAttributes="Bold"
+                               TextColor="White" />
+                        <Switch x:Name="GpuMiningSwitch"
+                                OnColor="#1E90FF"
+                                ThumbColor="White"
+                                Toggled="GpuMiningSwitch_Toggled" />
+                        <Label x:Name="GpuStatusLabel"
+                               Text="{loc:Translate Key=GpuStatus}"
+                               FontSize="12"
+                               TextColor="#CBD2DC" />
+
+                        <Label Text="{loc:Translate Key=GpuIntensity}"
+                               FontSize="15"
+                               FontAttributes="Bold"
+                               TextColor="White" />
+                        <Label x:Name="GpuIntensityValueLabel"
+                               Text="70%"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="#1E90FF" />
+                        <Slider x:Name="GpuIntensitySlider"
+                                Minimum="5"
+                                Maximum="100"
+                                Value="70"
+                                MinimumTrackColor="#1E90FF"
+                                MaximumTrackColor="#465366"
+                                ThumbColor="#1E90FF"
+                                ValueChanged="GpuIntensitySlider_ValueChanged" />
+                        <Label Text="{loc:Translate Key=GpuIntensityExplanation}"
+                               FontSize="12"
+                               TextColor="#CBD2DC" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Button Text="{loc:Translate Key=Done}"
+                        Background="#1E90FF"
+                        TextColor="#111318"
+                        FontAttributes="Bold"
+                        Clicked="DoneButton_Clicked" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

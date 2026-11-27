@@ -1,0 +1,101 @@
+#version 450
+#extension GL_EXT_control_flow_attributes : enable
+
+// SHA-256d do cabeçalho de bloco (80 bytes, SHA-256d: DigiByte). O primeiro bloco (midstate) vem pronto
+// do CPU; cada thread varre PER_THREAD nonces. O mesmo algoritmo está em
+// sha256_cpu.h e é testado contra hashlib (tests/check_against_hashlib.py).
+
+#define PER_THREAD 4u        // precisa ser igual a kPerThread em vulkan_miner.cpp
+#define MAX_RESULTS 32u
+
+layout(local_size_x = 64) in;
+
+layout(push_constant) uniform Params {
+    uvec4 mid0;   // midstate[0..3]
+    uvec4 mid1;   // midstate[4..7]
+    uvec4 tail;   // w0, w1, w2 (bytes 64..75 do cabeçalho), não usado
+    uvec4 cfg;    // startNonce, count, targetTop, não usado
+} P;
+
+layout(std430, set = 0, binding = 0) buffer Results {
+    uint count;
+    uint nonces[MAX_RESULTS];
+} res;
+
+const uint K[64] = uint[64](
+    0x428a2f98u, 0x71374491u, 0xb5c0fbcfu, 0xe9b5dba5u, 0x3956c25bu, 0x59f111f1u, 0x923f82a4u, 0xab1c5ed5u,
+    0xd807aa98u, 0x12835b01u, 0x243185beu, 0x550c7dc3u, 0x72be5d74u, 0x80deb1feu, 0x9bdc06a7u, 0xc19bf174u,
+    0xe49b69c1u, 0xefbe4786u, 0x0fc19dc6u, 0x240ca1ccu, 0x2de92c6fu, 0x4a7484aau, 0x5cb0a9dcu, 0x76f988dau,
+    0x983e5152u, 0xa831c66du, 0xb00327c8u, 0xbf597fc7u, 0xc6e00bf3u, 0xd5a79147u, 0x06ca6351u, 0x14292967u,
+    0x27b70a85u, 0x2e1b2138u, 0x4d2c6dfcu, 0x53380d13u, 0x650a7354u, 0x766a0abbu, 0x81c2c92eu, 0x92722c85u,
+    0xa2bfe8a1u, 0xa81a664bu, 0xc24b8b70u, 0xc76c51a3u, 0xd192e819u, 0xd6990624u, 0xf40e3585u, 0x106aa070u,
+    0x19a4c116u, 0x1e376c08u, 0x2748774cu, 0x34b0bcb5u, 0x391c0cb3u, 0x4ed8aa4au, 0x5b9cca4fu, 0x682e6ff3u,
+    0x748f82eeu, 0x78a5636fu, 0x84c87814u, 0x8cc70208u, 0x90befffau, 0xa4506cebu, 0xbef9a3f7u, 0xc67178f2u);
+
+uint rotr(uint x, uint n) { return (x >> n) | (x << (32u - n)); }
+
+uint bswap32(uint x) {
+    return (x >> 24) | ((x >> 8) & 0x0000ff00u) | ((x << 8) & 0x00ff0000u) | (x << 24);
+}
+
+// Comprime um bloco; st recebe st_inicial + resultado (igual a compress() do CPU).
+void compress(inout uint st[8], uint w[16]) {
+    uint a = st[0], b = st[1], c = st[2], d = st[3];
+    uint e = st[4], f = st[5], g = st[6], h = st[7];
+    [[unroll]] for (uint i = 0u; i < 64u; i++) {
+        uint wi;
+        if (i < 16u) {
+            wi = w[i];
+        } else {
+            uint w15 = w[(i + 1u) & 15u];
+            uint w2  = w[(i + 14u) & 15u];
+            uint s0 = rotr(w15, 7u) ^ rotr(w15, 18u) ^ (w15 >> 3u);
+            uint s1 = rotr(w2, 17u) ^ rotr(w2, 19u) ^ (w2 >> 10u);
+            wi = w[i & 15u] + s0 + w[(i + 9u) & 15u] + s1;
+            w[i & 15u] = wi;
+        }
+        uint S1 = rotr(e, 6u) ^ rotr(e, 11u) ^ rotr(e, 25u);
+        uint ch = (e & f) ^ (~e & g);
+        uint t1 = h + S1 + ch + K[i] + wi;
+        uint S0 = rotr(a, 2u) ^ rotr(a, 13u) ^ rotr(a, 22u);
+        uint maj = (a & b) ^ (a & c) ^ (b & c);
+        uint t2 = S0 + maj;
+        h = g; g = f; f = e; e = d + t1; d = c; c = b; b = a; a = t1 + t2;
+    }
+    st[0] += a; st[1] += b; st[2] += c; st[3] += d;
+    st[4] += e; st[5] += f; st[6] += g; st[7] += h;
+}
+
+void main() {
+    uint base = gl_GlobalInvocationID.x * PER_THREAD;
+    uint startNonce = P.cfg.x;
+    uint total = P.cfg.y;
+    uint targetTop = P.cfg.z;
+
+    for (uint k = 0u; k < PER_THREAD; k++) {
+        uint idx = base + k;
+        if (idx >= total) break;
+        uint nonce = startNonce + idx;
+
+        // Primeiro SHA-256: bloco 2 do cabeçalho (16 bytes + padding de 80 bytes).
+        uint st[8] = uint[8](P.mid0.x, P.mid0.y, P.mid0.z, P.mid0.w,
+                             P.mid1.x, P.mid1.y, P.mid1.z, P.mid1.w);
+        uint w[16] = uint[16](P.tail.x, P.tail.y, P.tail.z, bswap32(nonce),
+                              0x80000000u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 640u);
+        compress(st, w);
+
+        // Segundo SHA-256: o digest de 32 bytes + padding.
+        uint st2[8] = uint[8](0x6a09e667u, 0xbb67ae85u, 0x3c6ef372u, 0xa54ff53au,
+                              0x510e527fu, 0x9b05688cu, 0x1f83d9abu, 0x5be0cd19u);
+        uint w2[16] = uint[16](st[0], st[1], st[2], st[3], st[4], st[5], st[6], st[7],
+                               0x80000000u, 0u, 0u, 0u, 0u, 0u, 0u, 256u);
+        compress(st2, w2);
+
+        // 32 bits mais significativos do hash (número little-endian de 256 bits).
+        // Filtro conservador: o CPU confirma o hash completo contra o alvo.
+        if (bswap32(st2[7]) <= targetTop) {
+            uint pos = atomicAdd(res.count, 1u);
+            if (pos < MAX_RESULTS) res.nonces[pos] = nonce;
+        }
+    }
+}

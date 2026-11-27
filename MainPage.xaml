@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:loc="clr-namespace:MineDigibyteMobile.Localization"
+             x:Class="MineDigibyteMobile.MainPage"
+             Background="#101318"
+             Title="MineDigibyteMobile">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="⚙️"
+                     Order="Primary"
+                     Priority="0"
+                     Clicked="SettingsButton_Clicked" />
+    </ContentPage.ToolbarItems>
+    <Grid RowDefinitions="*">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="16" Spacing="14">
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="⛏ MineDigibyteMobile"
+                           FontSize="25"
+                           FontAttributes="Bold"
+                           TextColor="#1E90FF" />
+                    <Label Text="{loc:Translate Key=MainSubtitle}"
+                           FontSize="13"
+                           TextColor="#CBD2DC" />
+                </VerticalStackLayout>
+
+                <Border Background="#1B222C"
+                        Stroke="#334052"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="{loc:Translate Key=MiningStatusHeader}"
+                               FontSize="12"
+                               FontAttributes="Bold"
+                               TextColor="#1E90FF" />
+                        <Label x:Name="StatusLabel"
+                               Text="{loc:Translate Key=StatusDisconnected}"
+                               TextColor="#FF7777"
+                               FontSize="21"
+                               FontAttributes="Bold" />
+                        <Grid ColumnDefinitions="*,*"
+                              RowDefinitions="Auto,Auto"
+                              ColumnSpacing="12">
+                            <Label Text="{loc:Translate Key=CurrentHashrate}"
+                                   FontSize="11"
+                                   TextColor="#CBD2DC" />
+                            <Label Grid.Column="1"
+                                   Text="{loc:Translate Key=AverageHashrate}"
+                                   FontSize="11"
+                                   TextColor="#CBD2DC" />
+                            <Label x:Name="HashrateLabel"
+                                   Grid.Row="1"
+                                   Text="0 H/s"
+                                   FontSize="22"
+                                   FontAttributes="Bold"
+                                   TextColor="White" />
+                            <Label x:Name="AverageHashrateLabel"
+                                   Grid.Row="1"
+                                   Grid.Column="1"
+                                   Text="0 H/s"
+                                   FontSize="22"
+                                   FontAttributes="Bold"
+                                   TextColor="White" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,*"
+                              RowDefinitions="Auto,Auto"
+                              ColumnSpacing="12">
+                            <Label Text="{loc:Translate Key=BestDifficulty}"
+                                   FontSize="11"
+                                   TextColor="#CBD2DC" />
+                            <Label Grid.Column="1"
+                                   Text="{loc:Translate Key=ValidBlocks}"
+                                   FontSize="11"
+                                   TextColor="#CBD2DC" />
+                            <Label x:Name="BestDifficultyLabel"
+                                   Grid.Row="1"
+                                   Text="0"
+                                   FontSize="20"
+                                   FontAttributes="Bold"
+                                   TextColor="#1E90FF" />
+                            <Label x:Name="ValidBlocksLabel"
+                                   Grid.Row="1"
+                                   Grid.Column="1"
+                                   Text="{loc:Translate Key=ValidBlocksInitial}"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="#FFD27A" />
+                        </Grid>
+                        <Button x:Name="StartButton"
+                                Text="{loc:Translate Key=Start}"
+                                Background="#1E90FF"
+                                TextColor="#111318"
+                                FontAttributes="Bold"
+                                Clicked="StartButton_Clicked" />
+                        <Button x:Name="PauseButton"
+                                Text="{loc:Translate Key=Pause}"
+                                Background="#303A49"
+                                TextColor="White"
+                                IsVisible="False"
+                                Clicked="PauseButton_Clicked" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Background="#1B222C"
+                        Stroke="#334052"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="7">
+                        <Label Text="{loc:Translate Key=HardwareDetected}"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="#1E90FF" />
+                        <Label x:Name="HardwareDeviceLabel"
+                               Text="{loc:Translate Key=DetectingDevice}"
+                               FontSize="14"
+                               TextColor="White" />
+                        <Label x:Name="HardwareCpuLabel"
+                               Text="{loc:Translate Key=CpuLabel}"
+                               FontSize="12"
+                               TextColor="#CBD2DC" />
+                        <Label x:Name="HardwareGpuLabel"
+                               Text="{loc:Translate Key=GpuDetecting}"
+                               FontSize="12"
+                               TextColor="#CBD2DC" />
+                        <Label x:Name="MiningBackendLabel"
+                               Text="{loc:Translate Key=EngineCpu}"
+                               FontSize="13"
+                               FontAttributes="Bold"
+                               TextColor="#82E0AA" />
+                        <Label Text="{loc:Translate Key=GpuActivationNotice}"
+                               FontSize="11"
+                               TextColor="#AAB4C2" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Background="#1B222C"
+                        Stroke="#334052"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="{loc:Translate Key=Metrics}"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="#1E90FF" />
+                        <Grid ColumnDefinitions="*,*"
+                              RowDefinitions="Auto,Auto,Auto,Auto"
+                              RowSpacing="12"
+                              ColumnSpacing="12">
+                            <VerticalStackLayout>
+                                <Label Text="{loc:Translate Key=SessionHashes}" FontSize="10" TextColor="#CBD2DC" />
+                                <Label x:Name="TotalHashesLabel" Text="0" FontSize="16" TextColor="White" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1">
+                                <Label Text="{loc:Translate Key=TotalMHashes}" FontSize="10" TextColor="#CBD2DC" />
+                                <Label x:Name="TotalMHashesLabel" Text="0.00 MH" FontSize="16" TextColor="White" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="1">
+                                <Label Text="{loc:Translate Key=Uptime}" FontSize="10" TextColor="#CBD2DC" />
+                                <Label x:Name="TimeLabel" Text="00:00:00" FontSize="16" TextColor="White" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="1">
+                                <Label Text="{loc:Translate Key=ShareDifficulty}" FontSize="10" TextColor="#CBD2DC" />
+                                <Label x:Name="CurrentDifficultyLabel" Text="N/D" FontSize="16" TextColor="White" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="2">
+                                <Label Text="{loc:Translate Key=JobsReceived}" FontSize="10" TextColor="#CBD2DC" />
+                                <Label x:Name="JobsLabel" Text="0" FontSize="16" TextColor="White" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="2" Grid.Column="1">
+                                <Label Text="{loc:Translate Key=CleanJobs}" FontSize="10" TextColor="#CBD2DC" />
+                                <Label x:Name="CleanJobsLabel" Text="0" FontSize="16" TextColor="White" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="3">
+                                <Label Text="{loc:Translate Key=CurrentJob}" FontSize="10" TextColor="#CBD2DC" />
+                                <Label x:Name="CurrentJobLabel" Text="—" FontSize="14" TextColor="White" LineBreakMode="TailTruncation" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="3" Grid.Column="1">
+                                <Label Text="{loc:Translate Key=LastJob}" FontSize="10" TextColor="#CBD2DC" />
+                                <Label x:Name="LastJobLabel" Text="—" FontSize="14" TextColor="White" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Background="#1B222C"
+                        Stroke="#334052"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{loc:Translate Key=HashrateChartTitle}"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="#1E90FF" />
+                        <GraphicsView x:Name="HashrateChart"
+                                      HeightRequest="170"
+                                      HorizontalOptions="Fill" />
+                        <Label Text="{loc:Translate Key=HashrateChartSubtitle}"
+                               FontSize="11"
+                               TextColor="#AAB4C2" />
+                        <Label Text="{loc:Translate Key=ShareChartTitle}"
+                               FontSize="13"
+                               FontAttributes="Bold"
+                               TextColor="#1E90FF"
+                               Margin="0,8,0,0" />
+                        <GraphicsView x:Name="ShareChart"
+                                      HeightRequest="105"
+                                      HorizontalOptions="Fill" />
+                        <Label Text="{loc:Translate Key=ShareChartSubtitle}"
+                               FontSize="11"
+                               TextColor="#AAB4C2" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Background="#1B222C"
+                        Stroke="#334052"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="{loc:Translate Key=SessionShares}"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="#1E90FF" />
+                        <Grid ColumnDefinitions="*,*"
+                              RowDefinitions="Auto,Auto,Auto">
+                            <Label Text="{loc:Translate Key=Found}" TextColor="#CBD2DC" />
+                            <Label x:Name="SharesFoundLabel" Grid.Column="1" Text="0" TextColor="White" HorizontalTextAlignment="End" />
+                            <Label Grid.Row="1" Text="{loc:Translate Key=Sent}" TextColor="#CBD2DC" />
+                            <Label x:Name="SharesSentLabel" Grid.Row="1" Grid.Column="1" Text="0" TextColor="White" HorizontalTextAlignment="End" />
+                            <Label Grid.Row="2" Text="{loc:Translate Key=AcceptedRejectedExpired}" TextColor="#CBD2DC" />
+                            <Label x:Name="SharesAcceptedLabel" Grid.Row="2" Grid.Column="1" Text="0 / 0 / 0" TextColor="White" HorizontalTextAlignment="End" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,*">
+                            <VerticalStackLayout>
+                                <Label Text="{loc:Translate Key=AcceptanceResponses}" FontSize="10" TextColor="#CBD2DC" />
+                                <Label x:Name="AcceptanceLabel" Text="0.0%" FontSize="17" TextColor="#82E0AA" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1">
+                                <Label Text="{loc:Translate Key=Pending}" FontSize="10" TextColor="#CBD2DC" />
+                                <Label x:Name="PendingSharesLabel" Text="0" FontSize="17" TextColor="White" />
+                            </VerticalStackLayout>
+                        </Grid>
+                        <Label Text="{loc:Translate Key=LastShareSent}" FontSize="10" TextColor="#CBD2DC" />
+                        <Label x:Name="LastShareLabel" Text="{loc:Translate Key=None}" TextColor="White" />
+                        <Label Text="{loc:Translate Key=LastPoolResponse}" FontSize="10" TextColor="#CBD2DC" />
+                        <Label x:Name="LastPoolResponseLabel" Text="{loc:Translate Key=NoResponse}" TextColor="White" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Background="#1B222C"
+                        Stroke="#334052"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="{loc:Translate Key=BatteryTemperature}"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="#1E90FF" />
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout>
+                                <Label x:Name="TempBigLabel"
+                                       Text="-- °C"
+                                       FontSize="34"
+                                       FontAttributes="Bold"
+                                       TextColor="#AAB4C2" />
+                                <Label x:Name="BatteryLabel"
+                                       Text="{loc:Translate Key=BatteryUnavailable}"
+                                       FontSize="12"
+                                       TextColor="#CBD2DC" />
+                            </VerticalStackLayout>
+                            <Border x:Name="TempZoneChip"
+                                    Grid.Column="1"
+                                    VerticalOptions="Start"
+                                    Background="#2A323E"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 12"
+                                    Padding="10,4">
+                                <Label x:Name="TempZoneLabel"
+                                       Text="{loc:Translate Key=NoReading}"
+                                       FontSize="11"
+                                       FontAttributes="Bold"
+                                       TextColor="#AAB4C2" />
+                            </Border>
+                        </Grid>
+
+                        <ProgressBar x:Name="TempGauge"
+                                     Progress="0"
+                                     ProgressColor="#AAB4C2"
+                                     BackgroundColor="#2A323E" />
+                        <Grid ColumnDefinitions="*,*,*,*">
+                            <Label x:Name="TempMarkerMinLabel" Text="20°" FontSize="9" TextColor="#AAB4C2" />
+                            <Label x:Name="TempMarkerResumeLabel" Grid.Column="1" Text="40°" FontSize="9"
+                                   TextColor="#F7DC6F" HorizontalTextAlignment="Center" />
+                            <Label x:Name="TempMarkerThrottleLabel" Grid.Column="2" Text="42°" FontSize="9"
+                                   TextColor="#F39C12" HorizontalTextAlignment="Center" />
+                            <Label x:Name="TempMarkerPauseLabel" Grid.Column="3" Text="45°" FontSize="9"
+                                   TextColor="#E74C3C" HorizontalTextAlignment="End" />
+                        </Grid>
+
+                        <GraphicsView x:Name="TempChart"
+                                      HeightRequest="110" />
+
+                        <Label x:Name="BatteryTempLabel"
+                               Text="{loc:Translate Key=SessionNoReadings}"
+                               FontSize="12"
+                               TextColor="#CBD2DC" />
+                        <Label x:Name="SystemThermalLabel"
+                               Text="{loc:Translate Key=AndroidThermalStatus}"
+                               FontSize="12"
+                               TextColor="#CBD2DC" />
+                        <Label x:Name="DeviceTempLabel"
+                               Text="{loc:Translate Key=ThermalProtectionWaiting}"
+                               TextColor="White" />
+                        <Label x:Name="TempExplainLabel"
+                               Text="{loc:Translate Key=ThermalExplanation}"
+                               FontSize="11"
+                               TextColor="#AAB4C2" />
+                        <Label x:Name="TempLimitWarningLabel"
+                               IsVisible="False"
+                               Text=""
+                               FontSize="11"
+                               TextColor="#F39C12" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Background="#1B222C"
+                        Stroke="#334052"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{loc:Translate Key=RecentActivity}"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="#1E90FF" />
+                        <VerticalStackLayout x:Name="EventHistoryLayout" Spacing="5" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Background="#1B222C"
+                        Stroke="#334052"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="{loc:Translate Key=MiningConfiguration}"
+                               TextColor="#1E90FF"
+                               FontSize="18"
+                               FontAttributes="Bold" />
+                        <Label Text="{loc:Translate Key=WalletAddress}" TextColor="#CBD2DC" />
+                        <Entry x:Name="WalletEntry"
+                               Placeholder="{loc:Translate Key=WalletPlaceholder}"
+                               TextColor="White"
+                               PlaceholderColor="#AAB4C2" />
+                        <Label Text="{loc:Translate Key=PoolAddress}" TextColor="#CBD2DC" />
+                        <Entry x:Name="PoolEntry"
+                               Placeholder="{loc:Translate Key=PoolPlaceholder}"
+                               TextColor="White"
+                               PlaceholderColor="#AAB4C2" />
+                        <Label Text="{loc:Translate Key=PoolPort}" TextColor="#CBD2DC" />
+                        <Entry x:Name="PortEntry"
+                               Placeholder="9996"
+                               Keyboard="Numeric"
+                               TextColor="White"
+                               PlaceholderColor="#AAB4C2" />
+                        <Label Text="{loc:Translate Key=WorkerName}" TextColor="#CBD2DC" />
+                        <Entry x:Name="WorkerEntry"
+                               Placeholder="{loc:Translate Key=WorkerPlaceholder}"
+                               TextColor="White"
+                               PlaceholderColor="#AAB4C2" />
+                        <Button Text="{loc:Translate Key=SaveConfiguration}"
+                                Background="#303A49"
+                                TextColor="White"
+                                Clicked="SaveConfig_Clicked" />
+                        <Label x:Name="ConfigStatusLabel"
+                               Text=""
+                               TextColor="#82E0AA"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border> 
+
+
+                <!-- DONATE / SUPPORT THE CREATOR -->
+                <Border Background="#1B222C"
+                        Stroke="#334052"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="{loc:Translate Key=DonationHeading}"
+                               FontSize="17"
+                               FontAttributes="Bold"
+                               TextColor="#1E90FF"
+                               HorizontalTextAlignment="Center" />
+
+                        <Label Text="{loc:Translate Key=DonationDescription}"
+                               FontSize="12"
+                               TextColor="#CBD2DC"
+                               HorizontalTextAlignment="Center" />
+
+                        <Image x:Name="DonationQrImage"
+                               HeightRequest="220"
+                               WidthRequest="220"
+                               HorizontalOptions="Center"
+                               Aspect="AspectFit" />
+
+                        <Label Text="{loc:Translate Key=DigiByteMainnet}"
+                               FontSize="12"
+                               FontAttributes="Bold"
+                               TextColor="#1E90FF"
+                               HorizontalTextAlignment="Center" />
+
+                        <Label Text="{loc:Translate Key=PublicWalletAddress}"
+                               FontSize="11"
+                               TextColor="#CBD2DC" />
+
+                        <Label x:Name="DonationAddressLabel"
+                               Text="{loc:Translate Key=DonationNotConfigured}"
+                               FontSize="12"
+                               TextColor="White"
+                               LineBreakMode="WordWrap" />
+
+                        <Button Text="{loc:Translate Key=CopyDigiByteAddress}"
+                                Background="#1E90FF"
+                                TextColor="#111318"
+                                FontAttributes="Bold"
+                                Clicked="CopyDonationAddress_Clicked" />
+
+                        <Label Text="{loc:Translate Key=ThanksDonation}"
+                               FontSize="11"
+                               TextColor="#82E0AA"
+                               HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+
+                <Border Background="#1B222C"
+                        Stroke="#334052"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="16">
+                      
+
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{loc:Translate Key=ConnectionLog}"
+                               TextColor="#1E90FF"
+                               FontSize="16"
+                               FontAttributes="Bold" />
+                        <Grid ColumnDefinitions="*,*">
+                            <Button Text="{loc:Translate Key=CopyLog}"
+                                    Background="#303A49"
+                                    TextColor="White"
+                                    Clicked="CopyLog_Clicked" />
+                            <Button Grid.Column="1"
+                                    Text="{loc:Translate Key=Clear}"
+                                    Background="#303A49"
+                                    TextColor="White"
+                                    Clicked="ClearLog_Clicked" />
+                        </Grid>
+                        <Label x:Name="LogLabel"
+                               Text="{loc:Translate Key=WaitingStart}"
+                               TextColor="#A8E6B0"
+                               FontSize="12"
+                               LineBreakMode="WordWrap" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="{loc:Translate Key=MiningDisclaimer}"
+                       TextColor="#CBD2DC"
+                       FontSize="12"
+                       HorizontalTextAlignment="Center"
+                       Margin="5,4,5,12" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

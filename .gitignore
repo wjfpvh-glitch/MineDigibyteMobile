@@ -1,0 +1,19 @@
+# Build outputs
+bin/
+obj/
+
+# User-specific files
+.vs/
+*.user
+*.suo
+
+# OS-generated files
+.DS_Store
+
+# Chaves privadas e credenciais
+*.keystore
+*.jks
+*.p12
+*.pfx
+keystore.properties
+.env

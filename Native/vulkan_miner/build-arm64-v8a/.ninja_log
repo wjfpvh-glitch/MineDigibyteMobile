@@ -1,0 +1,5 @@
+# ninja log v5
+10	3410	8174471105639432	sha256d.spv.inc	9762e4a7f0fb02ee
+10	3410	8174471105639432	C:/Users/wjfpv/OneDrive/Documentos/MineDigibyteMobile/Native/vulkan_miner/build-arm64-v8a/sha256d.spv.inc	9762e4a7f0fb02ee
+3411	34888	8174471419641920	CMakeFiles/vulkanminer.dir/vulkan_miner.cpp.o	60cb0b95b3e7f5c
+34907	35356	8174471424949405	libvulkanminer.so	9b4b31a0063d544e
