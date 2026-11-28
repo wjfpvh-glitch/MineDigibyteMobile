@@ -298,6 +298,7 @@
   "InvalidJobId": "Invalid job ID.",
   "InvalidMerkleBranches": "Invalid Merkle Branches list.",
   "WorkPreparedSuffix": " prepared for processing.",
+  "WorkLabelPrefix": "Job ",
   "PreviousWorkInvalidated": "Previous work invalidated by the pool.",
   "ShaEngineStarted": "SHA-256d engine started.",
   "ShaEngineStopped": "SHA-256d engine stopped.",

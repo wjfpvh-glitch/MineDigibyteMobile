@@ -2,9 +2,10 @@
 rem Compila as bibliotecas de GPU (Vulkan e OpenGL ES) para 64 bits e 32 bits.
 rem Coloque este arquivo na pasta Native e de dois cliques.
 setlocal
-set SDK=C:\Users\wjfpv\AppData\Local\Android\Sdk
-set ANDROID_NDK_HOME=%SDK%\ndk\27.0.12077973
-set CMAKE_BIN=%SDK%\cmake\3.22.1\bin
+if "%ANDROID_SDK_ROOT%"=="" set ANDROID_SDK_ROOT=%ANDROID_HOME%
+if "%ANDROID_SDK_ROOT%"=="" set ANDROID_SDK_ROOT=%LOCALAPPDATA%\Android\Sdk
+if "%ANDROID_NDK_HOME%"=="" set ANDROID_NDK_HOME=%ANDROID_SDK_ROOT%\ndk\27.0.12077973
+if "%CMAKE_BIN%"=="" set CMAKE_BIN=%ANDROID_SDK_ROOT%\cmake\3.22.1\bin
 set ROOT=%~dp0
 if "%ROOT:~-1%"=="\" set ROOT=%ROOT:~0,-1%
 

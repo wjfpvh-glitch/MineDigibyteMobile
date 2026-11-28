@@ -73,7 +73,7 @@
 		<RuntimeIdentifiers>android-arm;android-arm64;android-x64</RuntimeIdentifiers>
 	</PropertyGroup>
 
-	<!-- Bibliotecas nativas de GPU (geradas por Native\build_all_wjfpv.bat). Sem elas o app compila e minera so com CPU. -->
+	<!-- Bibliotecas nativas de GPU (geradas por Native\build_all.bat). Sem elas o app compila e minera so com CPU. -->
 	<ItemGroup Condition="$(TargetFramework.Contains('-android'))">
 		<AndroidNativeLibrary Include="Platforms\Android\lib\arm64-v8a\*.so">
 			<Abi>arm64-v8a</Abi>

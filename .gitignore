@@ -10,7 +10,10 @@ obj/
 # OS-generated files
 .DS_Store
 
-# Chaves privadas e credenciais
+# Local native build outputs
+Native/vulkan_miner/build-*/
+
+# Signing keys and credentials
 *.keystore
 *.jks
 *.p12

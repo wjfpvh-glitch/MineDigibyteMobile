@@ -6,4 +6,4 @@ OpenGL ES. Se nenhum passar no auto-teste (vetor de teste SHA-256d: bloco gênes
 
 Aparelhos só com OpenGL ES 3.0 (sem 3.1) não têm compute shader e ficam na CPU.
 
-Para compilar tudo (Vulkan + OpenGL ES, 64 e 32 bits), rode `Native\build_all_wjfpv.bat`.
+Para compilar tudo (Vulkan + OpenGL ES, 64 e 32 bits), rode `Native\build_all.bat`.
